@@ -1,0 +1,46 @@
+app_name: ecommerce_pipeline
+
+paths:
+  s3_bucket: "s3://ecommerce-data-tushar/"
+  landing: "s3://ecommerce-data-tushar/landing_zone/"
+  raw_full: "s3://ecommerce-data-tushar/landing_zone/full_load/"
+  raw_inc: "s3://ecommerce-data-tushar/landing_zone/increment_load/"
+  
+  bronze: "s3://ecommerce-data-tushar/bronze/"
+  silver: "s3://ecommerce-data-tushar/silver/"
+  gold: "s3://ecommerce-data-tushar/gold/"
+  
+  audit: "s3://ecommerce-data-tushar/audit/"
+  rejected_data_silver: "s3://ecommerce-data-tushar/quarantine_records/"
+  checkpoints: "s3://ecommerce-data-tushar/checkpoints/"
+  watermark: "s3://ecommerce-data-tushar/audit/watermark/"
+
+spark:
+  app_name: "ecommerce_pipeline"
+  log_level: "WARN"
+  shuffle_partitions: "auto"
+
+files:
+  - customers.csv
+  - categories.csv
+  - suppliers.csv
+  - warehouses.csv
+  - products.csv
+  - inventory.csv
+  - orders.csv
+  - order_items.csv
+  - payments.csv
+
+files_inc:
+  customers:
+      joining_key: customer_id
+  products:
+      joining_key: product_id
+  orders:
+    joining_key: order_id
+  order_items:
+    joining_key: order_id
+  payments:
+    joining_key: payment_id
+
+load_type: INC
